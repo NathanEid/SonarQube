@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'jenkins-ubuntu-slave' }
+    agent { any }
     stages {
         stage('sonarqube'){
             steps {
@@ -9,7 +9,7 @@ pipeline {
                     ]
                     def repositoryUrl = scm.userRemoteConfigs[0].getUrl()
                     def GIT_REPO_NAME = scm.userRemoteConfigs[0].getUrl().tokenize('/').last().split("\\.")[0]
-                    def scannerHome = tool 'sonar_scanner'
+                    def scannerHome = tool 'sonarqube'
                     def SONAR_BRANCH_NAME = env.BRANCH_NAME
                     withSonarQubeEnv(pipelineConfig.sonarQubeServer) {
                         sh "sed -i s#{{repo_name}}#${GIT_REPO_NAME}# sonar-project.properties"
